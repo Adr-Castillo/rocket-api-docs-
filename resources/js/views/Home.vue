@@ -1,8 +1,12 @@
 <!-- resources/js/views/Home.vue -->
 
 <template>
-    <div class="h-fit grid grid-cols-10 bg-white">
-        <div class="col-span-2 flex justify-between">
+    <!--Navbar and Sidebar-->
+    <div class="flex flex-col bg-white h-full py-6 pl-6 pr-20">
+        <!--Navbar-->
+        <div class="grid grid-cols-10 gap-16">
+            <!--navbar | logo & arrow button-->
+            <div v-if="isOpen" class="col-span-2 flex justify-between">
             <!--navbar | logo-->
             <div class="h-[50px] w-[50px]">
                 <img src="/var/www/html/rocket-api-docs/resources/images/rocket_api_logo.png" alt="rocket_logo">
