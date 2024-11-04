@@ -7,29 +7,69 @@
         <div class="grid grid-cols-10 gap-16">
             <!--navbar | logo & arrow button-->
             <div v-if="isOpen" class="col-span-2 flex justify-between">
-            <!--navbar | logo-->
-            <div class="h-[50px] w-[50px]">
-                <img src="/var/www/html/rocket-api-docs/resources/images/rocket_api_logo.png" alt="rocket_logo">
+                <!--navbar | logo-->
+                <button class="h-[42px] w-[42px]">
+                    <img src="/var/www/html/rocket-api-docs/resources/images/rocket_api_logo.png" alt="rocket_logo">
+                </button>
+                <!--navbar | arrowOpen-->
+                <button @click="isOpen = false">
+                    <Icon class=" h-[28px] w-fit text-gray-500" icon="material-symbols-light:keyboard-double-arrow-left-rounded" />
+                </button>
+            </div>
+            <div v-else class="flex">
+                <!--navbar | arrowClosed-->
+                <button @click="isOpen = true">
+                    <Icon class="h-[28px] w-fit text-gray-500" icon="material-symbols-light:keyboard-double-arrow-right-rounded" />
+                </button>
             </div>
 
-            <!--navbar | arrow button-->
-            <div class="h-[50px] w-[50px]">
-                <Icon class="h-full w-full" icon="material-symbols-light:keyboard-double-arrow-right-rounded" />
+            <!--navbar | search bar & directory-->
+            <div class="flex items-center col-span-8">
+                <!--navbar | search bar-->
+                <button class="basis-1/3 flex w-full h-full text-gray-500 justify-between border rounded-md border-black/10 p-3">
+                    <div class="flex items-center  gap-2">
+                        <Icon class="h-[28px] w-fit" icon="material-symbols-light:search"/>
+                        <p class="text-sm ">Search or ask...</p>
+                    </div>
+                    <div class="text-xl text-gray-500 place-content-end">/</div> <!--I couldn't get the / to be on the right side of the search bar while keeping all the search icons in the same button div-->
+                </button>
+                <!--navbar | directory-->
+                <div class="basis-2/3 flex items-center gap-6 justify-end text-sm ">
+                    <button class="hover:text-gray-500">API Explorer</button>
+                    <button class="hover:text-gray-500">Postman Collection</button>
+                    <button class="hover:text-gray-500">Rocket MGA | Agent Portal</button>
+                    <span class="text-gray-500/30 text-2xl">|</span>
+                    <button class="h-fit w-fit text-gray-500 hover:text-gray-800 rounded-full border-2 border-gray-500 p-1"><Icon class="h-[20px] w-fit " icon="ph:sun-light" /> <!--Add a better icon, and add transition from day/night--></button>
+                </div>
             </div>
         </div>
-
-        <!--navbar | search bar & directory-->
-        <div class="col-span-8 bg-red-500/40 flex place-content-center">
-            <div class="grid grid-cols-5 ">
-                <div class="col-span-3 ">
-                    <input type="text" placeholder="Search" class="w-full">
-                </div>
-                <div class="flex col-span-2 justify-around">
-                    <p>Directory</p>
-                    <p>Directory</p>
-                    <p>Directory</p>
-                    <p>Directory</p>
-                </div>
+        <!--navbar | sidebar & content-->
+        <div class="grid grid-cols-10 gap-16 mt-8">
+            <!--navbar | sidebar-->
+            <div v-if="isOpen" class="col-span-2 flex flex-col gap-4">
+                <button @click="is_selected = getting_started" class="hover:border hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 py-2 text-sm text-left" :class="{'bg-purple-100 border border-purple-400 text-purple-700': is_selected === 'getting_started'}">Getting Started</button>
+                <p class="no-edit-cursor text-sm text-left font-bold text-gray-800">Authentication</p> 
+                <button @click="is_selected = g_auth_token" class="hover:bg-gray-400/10 hover:border hover:border-gray-400/10 rounded-md px-2 focus:bg-purple-100 focus:border focus:text-purple-700 focus:border-purple-400 py-2 text-sm text-left ">Get Auth Token</button> 
+                <p class="no-edit-cursor text-sm text-left font-bold text-gray-800">Quotes</p>  
+                <button @click="is_selected = c_launch_lead" class="hover:bg-gray-400/10 hover:border hover:border-gray-400/10 rounded-md px-2 focus:bg-purple-100 focus:border focus:text-purple-700 focus:border-purple-400 py-2 text-sm text-left ">Create Launch Lead</button> 
+                <button @click="is_selected = g_lead_quote" class="hover:bg-gray-400/10 hover:border hover:border-gray-400/10 rounded-md px-2 focus:bg-purple-100 focus:border focus:text-purple-700 focus:border-purple-400 py-2 text-sm text-left ">Get Lead Quotes</button> 
+                <button @click="is_selected = webhook" class="hover:bg-gray-400/10 hover:border hover:border-gray-400/10 rounded-md px-2 focus:bg-purple-100 focus:border focus:text-purple-700 focus:border-purple-400 py-2 text-sm text-left ">Webhooks</button>
+            </div>
+            <!--navbar | content-->
+            <div v-if="is_selected === 'getting_started'" class="col-span-8">
+                <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ is_selected }}</h1>
+            </div>
+            <div v-if="is_selected === 'g_auth_token'" class="col-span-8">
+                <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ is_selected }}</h1>
+            </div>
+            <div v-if="is_selected === 'c_launch_lead'" class="col-span-8">
+                <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ is_selected }}</h1>
+            </div>
+            <div v-if="is_selected === 'g_lead_quote'" class="col-span-8">
+                <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ is_selected }}</h1>
+            </div>
+            <div v-if="is_selected === 'webhook'" class="col-span-8">
+                <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ is_selected }}</h1>
             </div>
         </div>
     </div>
@@ -41,6 +81,12 @@ import { Icon } from '@iconify/vue/dist/iconify.js';
 
 export default {
     name: "Home",
+    data() {
+        return {
+            isOpen: true,
+            is_selected: "getting_started",
+        }
+    },
     components: {
         Icon,
     }
