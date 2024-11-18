@@ -47,19 +47,19 @@
         <div class="grid grid-cols-10 gap-16 mt-8">
             <!--navbar | sidebar-->
             <div v-if="isOpen" class="col-span-2 flex flex-col gap-4">
-                <button @click="is_selected = 'getting_started'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 py-2 text-sm text-left" :class="{'bg-purple-100 border-purple-400 text-purple-700': is_selected === 'getting_started'}">Getting Started</button>
+                <button v-for="category in categories" @click="selected = category" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 py-2 text-sm text-left" :class="selected === category ? 'bg-purple-100 border border-purple-400 text-purple-700' : ''">{{ category }}</button>
                 <p class="no-edit-cursor text-sm text-left font-bold text-gray-800">Authentication</p> 
-                <button @click="is_selected = 'g_auth_token'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 focus:bg-purple-100 focus:border focus:text-purple-700 focus:border-purple-400 py-2 text-sm text-left ">Get Auth Token</button> 
+                <button @click="is_selected = 'g_auth_token'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 py-2 text-sm text-left ">Get Auth Token</button> 
                 <p class="no-edit-cursor text-sm text-left font-bold text-gray-800">Quotes</p>  
-                <button @click="is_selected = 'c_launch_lead'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 focus:bg-purple-100 focus:border focus:text-purple-700 focus:border-purple-400 py-2 text-sm text-left ">Create Launch Lead</button> 
-                <button @click="is_selected = 'g_lead_quote'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 focus:bg-purple-100 focus:border focus:text-purple-700 focus:border-purple-400 py-2 text-sm text-left ">Get Lead Quotes</button> 
-                <button @click="is_selected = 'webhook'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 focus:bg-purple-100 focus:border focus:text-purple-700 focus:border-purple-400 py-2 text-sm text-left ">Webhooks</button>
+                <button @click="is_selected = 'c_launch_lead'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 py-2 text-sm text-left ">Create Launch Lead</button> 
+                <button @click="is_selected = 'g_lead_quote'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 py-2 text-sm text-left ">Get Lead Quotes</button> 
+                <button @click="is_selected = 'webhook'" class="border-transparent hover:bg-gray-400/10 hover:border-gray-400/10 rounded-md px-2 py-2 text-sm text-left ">Webhooks</button>
             </div>
             <!--navbar | content-->
-            <div v-if="is_selected === 'getting_started'" class="col-span-8">
-                <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ is_selected }}</h1>
+            <div v-if="selected" class="col-span-8">
+                <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ selected }}</h1>
             </div>
-            <div v-if="is_selected === 'g_auth_token'" class="col-span-8">
+            <!-- <div v-if="is_selected === 'g_auth_token'" class="col-span-8">
                 <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ is_selected }}</h1>
             </div>
             <div v-if="is_selected === 'c_launch_lead'" class="col-span-8">
@@ -70,7 +70,7 @@
             </div>
             <div v-if="is_selected === 'webhook'" class="col-span-8">
                 <h1 class="text-2xl font-semibold border-l-2 border-purple-700 pl-4">Getting Started {{ is_selected }}</h1>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -84,27 +84,14 @@ export default {
     data() {
         return {
             isOpen: true,
-            is_selected: "getting_started",
+            selected: false,
 
             categories: {
-                Authentication: {
-                    name: "Authentication",
-                    code: "auth",
-                },
-                Quotes: [
-                    {
-                        name: "Create Launch Lead",
-                        code: "c_launch_lead",
-                    },
-                    {
-                        name: "Get Lead Quotes",
-                        code: "g_lead_quote",
-                    },
-                    {
-                        name: "Webhooks",
-                        code: "webhook",
-                    },
-                ]
+                getting_started: false,
+                g_auth_token: false,
+                c_launch_lead: false,
+                g_lead_quote: false,
+                webhook: false,
             }
         }
     },
